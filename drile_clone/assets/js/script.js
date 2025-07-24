@@ -31,9 +31,13 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Load Carousel (only on index.html)
   const isIndex =
-    window.location.pathname.endsWith("index.html") ||
-    window.location.pathname === "/" ||
-    window.location.pathname === "/index.html";
+
+  window.location.pathname === "/drile_clone/" ||
+  window.location.pathname === "/drile_clone/index.html" ||
+  window.location.pathname === "/" ||
+  window.location.pathname.endsWith("index.html");
+
+
 
   const carouselPlaceholder = document.getElementById("carousel-placeholder");
 
