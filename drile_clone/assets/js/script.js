@@ -1,53 +1,96 @@
+// ==========================
+// Main DOMContentLoaded Initialization
+// ==========================
 window.addEventListener("DOMContentLoaded", () => {
   const isInPages = window.location.pathname.includes("/pages/");
   const headerPath = isInPages ? "../components/header.html" : "components/header.html";
   const footerPath = isInPages ? "../components/footer.html" : "components/footer.html";
   const carouselPath = isInPages ? "../pages/carousel_slider.html" : "pages/carousel_slider.html";
+  const productsPath = isInPages ? "../pages/new_products.html" : "pages/new_products.html";
 
-
+  // --------------------------
   // Load Header
+  // --------------------------
   fetch(headerPath)
     .then((res) => res.text())
     .then((data) => {
       document.getElementById("header-placeholder").innerHTML = data;
       const logo = document.getElementById("logo");
       if (logo) {
-      gsap.from(logo, {
-        y: -20,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out"
-      });
-    }
+        gsap.from(logo, {
+          y: -20,
+          opacity: 0,
+          duration: 1,
+          ease: "power2.out"
+        });
+      }
       setTimeout(() => initializeHeaderInteractions(), 50);
     });
 
+  // --------------------------
   // Load Footer
+  // --------------------------
   fetch(footerPath)
     .then((res) => res.text())
     .then((data) => {
       document.getElementById("footer-placeholder").innerHTML = data;
     });
 
-  // Load Carousel (only on index.html)
+  // --------------------------
+  // Load Categories
+  // --------------------------
+  const categoriesPlaceholder = document.getElementById("categories-placeholder");
+  if (categoriesPlaceholder) {
+    const categoriesPath = isInPages ? "categories.html" : "pages/categories.html";
+    fetch(categoriesPath)
+      .then(res => res.text())
+      .then(data => {
+        categoriesPlaceholder.innerHTML = data;
+
+        // Scroll arrows logic
+        const scrollContainer = categoriesPlaceholder.querySelector(".categories-scroll");
+        const btnLeft = categoriesPlaceholder.querySelector(".scroll-left");
+        const btnRight = categoriesPlaceholder.querySelector(".scroll-right");
+
+        if (scrollContainer && btnLeft && btnRight) {
+          const scrollAmount = 150;
+
+          const updateButtons = () => {
+            btnLeft.disabled = scrollContainer.scrollLeft <= 0;
+            btnRight.disabled =
+              scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 1;
+          };
+
+          btnLeft.addEventListener("click", () => {
+            scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+          });
+
+          btnRight.addEventListener("click", () => {
+            scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+          });
+
+          scrollContainer.addEventListener("scroll", updateButtons);
+          updateButtons(); // Initial check
+        }
+      })
+      .catch(err => console.error("Error loading categories:", err));
+  }
+
+  // --------------------------
+  // Check if Index page, then load Carousel
+  // --------------------------
   const isIndex =
-
-  window.location.pathname === "/drile_clone/" ||
-  window.location.pathname === "/drile_clone/index.html" ||
-  window.location.pathname === "/" ||
-  window.location.pathname.endsWith("index.html");
-
-
+    window.location.pathname === "/drile_clone/" ||
+    window.location.pathname === "/drile_clone/index.html" ||
+    window.location.pathname === "/" ||
+    window.location.pathname.endsWith("index.html");
 
   const carouselPlaceholder = document.getElementById("carousel-placeholder");
-
   if (isIndex && carouselPlaceholder) {
     fetch(carouselPath)
       .then((res) => res.text())
       .then((data) => {
         carouselPlaceholder.innerHTML = data;
-
-        // GSAP carousel caption animation (your original block)
         gsap.from(".carousel-caption", {
           y: 50,
           opacity: 0,
@@ -55,13 +98,32 @@ window.addEventListener("DOMContentLoaded", () => {
           ease: "power3.out",
           stagger: 0.3
         });
-
-        // GSAP animated slide content
         setTimeout(() => initializeCarousel(), 50);
       });
   }
+
+  // --------------------------
+  // Load Products Section
+  // --------------------------
+  const productsPlaceholder = document.getElementById("products-placeholder");
+  if (productsPlaceholder) {
+    console.log("✅ Fetching Products Section from:", productsPath);
+    fetch(productsPath)
+      .then((res) => res.text())
+      .then((data) => {
+        console.log("✅ Fetched Products HTML Length:", data.length);
+        productsPlaceholder.innerHTML = data;
+        console.log("✅ Injected products into:", productsPlaceholder);
+      })
+      .catch((err) => console.error("❌ Error loading products:", err));
+  }
+
+  
 });
 
+// ==========================
+// Header Interactions
+// ==========================
 function initializeHeaderInteractions() {
   const toggleBtn = document.getElementById("toggle-contact");
   const contactToggleIcon = document.getElementById("contact-toggle-icon");
@@ -73,7 +135,7 @@ function initializeHeaderInteractions() {
 
   const offcanvasInstance = offcanvasEl ? new bootstrap.Offcanvas(offcanvasEl) : null;
 
-  // ===== Contact toggle (desktop/mobile) =====
+  // Contact toggle
   if (toggleBtn && contactToggleIcon) {
     toggleBtn.addEventListener("click", () => {
       const isMobile = window.innerWidth < 992;
@@ -96,7 +158,7 @@ function initializeHeaderInteractions() {
     }
   }
 
-  // ===== Search toggle =====
+  // Search toggle
   if (searchToggle && searchBar && searchClose) {
     searchToggle.addEventListener("click", (e) => {
       e.preventDefault();
@@ -118,7 +180,7 @@ function initializeHeaderInteractions() {
     });
   }
 
-  // ===== Account icon hover and tooltip =====
+  // Account icon hover/tooltip
   const accountIcon = document.getElementById("account-icon");
   const tooltip = document.getElementById("signin-tooltip");
   const form = document.getElementById("account-hover-form");
@@ -157,7 +219,7 @@ function initializeHeaderInteractions() {
     });
   }
 
-  // ===== Cart tooltip on hover =====
+  // Cart tooltip on hover
   const cartIcon = document.getElementById("cart-icon");
   const cartTooltip = document.getElementById("cart-tooltip");
 
@@ -176,7 +238,7 @@ function initializeHeaderInteractions() {
     });
   }
 
-  // ===== Cart hover preview + redirect =====
+  // Cart hover preview
   const cartPreview = document.getElementById("cart-hover-preview");
   const cartLink = document.getElementById("cart-link");
   const cartCountBadge = document.getElementById("cart-count-badge");
@@ -205,14 +267,12 @@ function initializeHeaderInteractions() {
       cartHovered = false;
       cartPreview.style.display = "none";
     });
-
-  
   }
 }
 
-
-
-// ✅ Carousel GSAP animation (restored + working)
+// ==========================
+// Carousel GSAP animation
+// ==========================
 function initializeCarousel() {
   const heroCarousel = document.querySelector("#heroCarousel");
   if (!heroCarousel) return;

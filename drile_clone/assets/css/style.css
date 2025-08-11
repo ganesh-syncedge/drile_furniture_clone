@@ -209,10 +209,9 @@ header .container-fluid {
   object-fit: contain;
   margin: auto;
 }
-
 .carousel-custom-controls {
   position: absolute;
-  bottom: 30px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -238,7 +237,7 @@ header .container-fluid {
 }
 .carousel-custom-controls .btn:hover {
   opacity: 0.9;
-}
+} 
 
 @media (max-width: 991.98px) {
   .carousel-bg {
@@ -841,3 +840,413 @@ form .form-control {
 
 
 
+/* //new products */
+ /* === CATEGORY NAVIGATION === */
+.category-nav .nav-link {
+  color: #bbb;
+  font-weight: 600;
+  margin: 0 15px;
+  text-decoration: none !important; /* ✅ remove underline */
+  border-bottom: none !important;   /* force no underline */
+}
+
+.category-nav .nav-link:hover {
+  color: #000;
+  text-decoration: none !important;
+}
+
+.category-nav .nav-link.active {
+  color: #000;
+  text-decoration: none !important;
+  border-bottom: 2px solid #000; /* ✅ shows only for active item */
+}
+
+/* === PRODUCT CARD === */
+.product-card {
+  text-align: center;
+  background: #fff;
+  position: relative;
+}
+
+/* === IMAGES === */
+.image-wrapper {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #eee;
+}
+
+.image-wrapper img {
+  width: 100%;
+  display: block;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+.image-wrapper .hover-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 1;
+  filter: blur(0px);
+}
+
+.product-card:hover .hover-img {
+  opacity: 1;
+  filter: blur(2px);
+}
+
+.product-card:hover .main-img {
+  opacity: 0;
+}
+
+/* === ICON BOX BOTTOM RIGHT === */
+.icon-box {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* ✅ space between icons */
+  opacity: 0;
+  backdrop-filter: blur(6px);
+  padding: 10px;
+  transition: all 0.4s ease;
+  z-index: 2;
+}
+
+.product-card:hover .icon-box {
+  opacity: 1;
+}
+
+/* === ICON STYLE === */
+.icon-box i {
+  font-size: 16px;
+  cursor: pointer;
+  color: #000;
+  background: #fff;
+  padding: 8px;
+  border: 1px solid #ccc;
+  display: inline-block;
+  width: 36px;
+  height: 36px;
+  line-height: 20px;
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.icon-box i:hover {
+  transform: scale(1.1);
+}
+
+/* === SALE BADGE === */
+.sale-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: darkred;
+  color: white;
+  font-size: 14px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  z-index: 3;
+}
+
+
+/* ===banner sale section=== */
+/* === Sale Banner Section with Background Image === */
+#sale-banner {
+  position: relative;
+  background: url('/drile_clone/assets/images/banner-sale-off.jpg') no-repeat center center;
+  background-size: contain;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+  overflow: hidden;
+}
+
+#sale-banner .content {
+  position: relative;
+  z-index: 2;
+  max-width: 90%;
+  width: 600px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0); /* Transparent to keep text inside image */
+}
+
+#sale-banner .big-discount {
+  font-size: 10vw;
+  font-weight: 900;
+  color: rgba(255, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+#sale-banner:hover .big-discount {
+  animation: beat 0.6s infinite;
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+#sale-banner .small-text {
+  letter-spacing: 1px;
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+#sale-banner .main-title {
+  font-size: 2rem;
+  color: #000;
+}
+
+/* Responsive Fixes */
+@media (max-width: 768px) {
+  #sale-banner {
+    height: 100vh; /* Still full height */
+    background-size: cover;
+    background-position: center;
+    padding: 20px;
+  }
+
+  #sale-banner .big-discount {
+    font-size: 18vw;
+  }
+
+  #sale-banner .main-title {
+    font-size: 1.4rem;
+  }
+
+  #sale-banner .btn {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+  }
+}
+
+
+/* === Testimonial Carousel === */
+.carousel-item {
+  padding: 2rem 1rem;
+}
+
+.carousel-item p.lead {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.carousel-item h6 {
+  font-size: 1rem;
+  margin-top: 1.5rem;
+}
+
+.carousel-item .text-muted {
+  font-size: 0.9rem;
+}
+
+/* === Testimonial Carousel Indicator Dots === */
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* More space between circles */
+  margin-top: 2rem;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: white;
+  border: 2px solid black;
+  opacity: 1;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.carousel-indicators .active {
+  background-color: black;
+  transform: scale(1.3);
+}
+
+/* === Logo Slider Wrapper === */
+.logo-slider-wrapper {
+  overflow: hidden;
+}
+
+/* === Logo Slider Animation === */
+.logo-slider {
+  animation: slideLeft 60s linear infinite; /* Slower scroll */
+  display: inline-flex;
+  white-space: nowrap;
+  gap: 100px; /* More gap between logos */
+  padding: 0 50px;
+  align-items: center;
+}
+
+.logo-slider img {
+  height: 100px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* === Keyframes for Logo Scroll === */
+@keyframes slideLeft {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 768px) {
+  .carousel-item p.lead {
+    font-size: 1rem;
+  }
+  .logo-slider img {
+    height: 70px;
+  }
+  .logo-slider {
+    gap: 60px;
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-item {
+    padding: 1.5rem 0.5rem;
+  }
+  .carousel-item h6 {
+    font-size: 0.95rem;
+  }
+  .carousel-item .text-muted {
+    font-size: 0.85rem;
+  }
+  .logo-slider img {
+    height: 60px;
+  }
+  .logo-slider {
+    gap: 40px;
+    padding: 0 20px;
+  }
+}
+/* Smooth hover dropdown on desktop */
+@media (min-width: 994px) {
+    .dropdown-hover .dropdown-menu {
+        display: block;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease, visibility 0.2s ease;
+    }
+    .dropdown-hover.show .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+.categories-section {
+  text-align: center;
+  position: relative;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.categories-scroll-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.categories-scroll {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 0.5rem 0;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.categories-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.category-card {
+  flex: 0 0 auto;
+  width: 140px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.category-card img {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid #eee;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.category-card span {
+  display: block;
+  margin-top: 0.5rem;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #222;
+}
+
+.category-card:hover img {
+  transform: scale(1.05);
+  border-color: #000;
+}
+
+/* Scroll buttons */
+.scroll-btn {
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 2rem;
+  padding: 0 12px;
+  color: #222;
+  user-select: none;
+  transition: color 0.3s ease;
+  z-index: 10;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scroll-btn:hover {
+  color: #000;
+}
+
+.scroll-left {
+  margin-right: 8px;
+}
+
+.scroll-right {
+  margin-left: 8px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 576px) {
+  .category-card {
+    width: 100px;
+  }
+
+  .category-card img {
+    height: 100px;
+    width: 100px;
+  }
+
+  .scroll-btn {
+    height: 100px;
+    font-size: 1.5rem;
+    padding: 0 8px;
+  }
+}

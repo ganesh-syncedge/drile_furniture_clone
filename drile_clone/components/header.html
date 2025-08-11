@@ -8,12 +8,20 @@
 
     <!-- Right: Language and Currency -->
     <div class="d-flex gap-3 mt-2 mt-md-0">
+      
       <!-- Language Dropdown -->
       <div class="dropdown">
-        <a class="text-dark fw-medium dropdown-toggle no-caret" href="#" data-bs-toggle="dropdown">
+        <a 
+          class="text-dark fw-medium dropdown-toggle no-caret" 
+          href="#" 
+          id="languageDropdown" 
+          role="button" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false"
+        >
           Language <i class="bi bi-chevron-down ms-1"></i>
         </a>
-        <ul class="dropdown-menu dropdown-menu-end">
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
           <li><a class="dropdown-item" href="#">English</a></li>
           <li><a class="dropdown-item" href="#">हिंदी</a></li>
           <li><a class="dropdown-item" href="#">Français</a></li>
@@ -22,21 +30,29 @@
 
       <!-- Currency Dropdown -->
       <div class="dropdown">
-        <a class="text-dark fw-medium dropdown-toggle no-caret" href="#" data-bs-toggle="dropdown">
+        <a 
+          class="text-dark fw-medium dropdown-toggle no-caret" 
+          href="#" 
+          id="currencyDropdown" 
+          role="button" 
+          data-bs-toggle="dropdown" 
+          aria-expanded="false"
+        >
           Currency <i class="bi bi-chevron-down ms-1"></i>
         </a>
-        <ul class="dropdown-menu dropdown-menu-end">
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="currencyDropdown">
           <li><a class="dropdown-item" href="#">INR ₹</a></li>
           <li><a class="dropdown-item" href="#">USD $</a></li>
           <li><a class="dropdown-item" href="#">EUR €</a></li>
         </ul>
       </div>
+
     </div>
   </div>
 </div>
 
 <!-- Header Navbar -->
-<header class="bg-white py-0">
+<header class="bg-white py-1">
 
   <div class="container d-flex align-items-center flex-wrap justify-content-between">
     <!-- Logo -->
