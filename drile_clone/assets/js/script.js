@@ -1,4 +1,4 @@
-// ==========================
+// // ==========================
 // Main DOMContentLoaded Initialization
 // ==========================
 window.addEventListener("DOMContentLoaded", () => {
@@ -39,6 +39,15 @@ window.addEventListener("DOMContentLoaded", () => {
   // --------------------------
   // Load Categories
   // --------------------------
+  function loadCSS(href) {
+    if (!document.querySelector(`link[href="${href}"]`)) {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = href;
+      document.head.appendChild(link);
+    }
+  }
+
   const categoriesPlaceholder = document.getElementById("categories-placeholder");
   if (categoriesPlaceholder) {
     const categoriesPath = isInPages ? "categories.html" : "pages/categories.html";
@@ -47,33 +56,15 @@ window.addEventListener("DOMContentLoaded", () => {
       .then(data => {
         categoriesPlaceholder.innerHTML = data;
 
-        // Scroll arrows logic
-        const scrollContainer = categoriesPlaceholder.querySelector(".categories-scroll");
-        const btnLeft = categoriesPlaceholder.querySelector(".scroll-left");
-        const btnRight = categoriesPlaceholder.querySelector(".scroll-right");
+      
 
-        if (scrollContainer && btnLeft && btnRight) {
-          const scrollAmount = 150;
-
-          const updateButtons = () => {
-            btnLeft.disabled = scrollContainer.scrollLeft <= 0;
-            btnRight.disabled =
-              scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 1;
-          };
-
-          btnLeft.addEventListener("click", () => {
-            scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-          });
-
-          btnRight.addEventListener("click", () => {
-            scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
-          });
-
-          scrollContainer.addEventListener("scroll", updateButtons);
-          updateButtons(); // Initial check
-        }
+        initializeCategoryFeature();
+        initializeCategoryScroll();
       })
       .catch(err => console.error("Error loading categories:", err));
+  } else {
+    initializeCategoryFeature();
+    initializeCategoryScroll();
   }
 
   // --------------------------
@@ -114,15 +105,143 @@ window.addEventListener("DOMContentLoaded", () => {
         console.log("✅ Fetched Products HTML Length:", data.length);
         productsPlaceholder.innerHTML = data;
         console.log("✅ Injected products into:", productsPlaceholder);
+
+        // --------------------------
+        // Initialize New Products Category Filter
+        // --------------------------
+        const buttons = document.querySelectorAll(".category-btn");
+        const products = document.querySelectorAll(".product-item");
+
+        function filterCategory(category) {
+          products.forEach(item => {
+            if (item.dataset.category === category) {
+              item.style.display = "block";
+            } else {
+              item.style.display = "none";
+            }
+          });
+        }
+
+        // Default: Show only chairs
+        filterCategory("chair");
+
+        buttons.forEach(btn => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            buttons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            filterCategory(btn.dataset.category);
+          });
+        });
       })
       .catch((err) => console.error("❌ Error loading products:", err));
   }
-
-  
 });
 
 // ==========================
-// Header Interactions
+// Category Feature Hover/Click
+// ==========================
+function initializeCategoryFeature() {
+  const categoryItems = document.querySelectorAll('.category-feature-item');
+  const featureImage = document.querySelector('.category-feature-image img');
+
+  categoryItems.forEach(item => {
+    const img = item.querySelector('img');
+    const defaultIcon = item.dataset.iconDefault;
+    const hoverIcon = item.dataset.iconHover;
+
+    if (item.classList.contains('active')) {
+      img.src = hoverIcon;
+      if (featureImage) {
+        featureImage.src = item.dataset.image;
+      }
+    } else {
+      img.src = defaultIcon;
+    }
+
+    item.addEventListener('mouseenter', () => {
+      img.src = hoverIcon;
+    });
+    item.addEventListener('mouseleave', () => {
+      if (!item.classList.contains('active')) {
+        img.src = defaultIcon;
+      }
+    });
+
+    item.addEventListener('click', () => {
+      categoryItems.forEach(i => {
+        i.classList.remove('active');
+        i.querySelector('img').src = i.dataset.iconDefault;
+      });
+      item.classList.add('active');
+      img.src = hoverIcon;
+      if (featureImage) {
+        featureImage.src = item.dataset.image;
+      }
+    });
+  });
+}
+
+// ==========================
+// Categories Scroll Buttons
+// ==========================
+function initializeCategoryScroll() {
+  const scrollContainer = document.querySelector(".categories-scroll");
+  const prevBtn = document.querySelector(".prev-btn");
+  const nextBtn = document.querySelector(".next-btn");
+  const scrollAmount = 256;
+
+  if (scrollContainer && prevBtn && nextBtn) {
+    let autoScrollInterval;
+
+    function scrollLeft() {
+      scrollContainer.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    }
+
+    function scrollRight() {
+      scrollContainer.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+
+    prevBtn.addEventListener("click", () => {
+      scrollLeft();
+      resetAutoScroll();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      scrollRight();
+      resetAutoScroll();
+    });
+
+    function startAutoScroll() {
+      autoScrollInterval = setInterval(() => {
+        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 1) {
+          scrollContainer.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          scrollRight();
+        }
+      }, 3000);
+    }
+
+    function stopAutoScroll() {
+      clearInterval(autoScrollInterval);
+    }
+
+    function resetAutoScroll() {
+      stopAutoScroll();
+      startAutoScroll();
+    }
+
+    scrollContainer.addEventListener("mouseenter", stopAutoScroll);
+    scrollContainer.addEventListener("mouseleave", startAutoScroll);
+    scrollContainer.addEventListener("focusin", stopAutoScroll);
+    scrollContainer.addEventListener("focusout", startAutoScroll);
+
+    startAutoScroll();
+  }
+}
+
+// ==========================
+// Header Interactions   (NOT WORKING)
 // ==========================
 function initializeHeaderInteractions() {
   const toggleBtn = document.getElementById("toggle-contact");
@@ -135,17 +254,14 @@ function initializeHeaderInteractions() {
 
   const offcanvasInstance = offcanvasEl ? new bootstrap.Offcanvas(offcanvasEl) : null;
 
-  // Contact toggle
   if (toggleBtn && contactToggleIcon) {
     toggleBtn.addEventListener("click", () => {
       const isMobile = window.innerWidth < 992;
-
       if (isMobile && offcanvasInstance) {
         offcanvasInstance.toggle();
       } else {
         if (contactInfo) contactInfo.classList.toggle("d-none");
       }
-
       contactToggleIcon.classList.toggle("bi-list");
       contactToggleIcon.classList.toggle("bi-x-lg");
     });
@@ -158,7 +274,6 @@ function initializeHeaderInteractions() {
     }
   }
 
-  // Search toggle
   if (searchToggle && searchBar && searchClose) {
     searchToggle.addEventListener("click", (e) => {
       e.preventDefault();
@@ -180,7 +295,20 @@ function initializeHeaderInteractions() {
     });
   }
 
-  // Account icon hover/tooltip
+  // ===== Home Mega Menu Image Hover =====
+  const previewImg = document.getElementById("home-preview-img");
+  if (previewImg) {
+    document.querySelectorAll(".home-dropdown .dropdown-item").forEach((link) => {
+      link.addEventListener("mouseenter", () => {
+        const newImg = link.getAttribute("data-img");
+        if (newImg && previewImg.src !== newImg) {
+          previewImg.src = newImg;
+        }
+      });
+    });
+  }
+
+
   const accountIcon = document.getElementById("account-icon");
   const tooltip = document.getElementById("signin-tooltip");
   const form = document.getElementById("account-hover-form");
@@ -200,7 +328,6 @@ function initializeHeaderInteractions() {
     accountIcon.addEventListener("mouseleave", () => {
       clearTimeout(tooltipTimeout);
       tooltip.style.opacity = 0;
-
       setTimeout(() => {
         if (!isFormHovered) form.style.display = "none";
       }, 150);
@@ -219,7 +346,6 @@ function initializeHeaderInteractions() {
     });
   }
 
-  // Cart tooltip on hover
   const cartIcon = document.getElementById("cart-icon");
   const cartTooltip = document.getElementById("cart-tooltip");
 
@@ -238,7 +364,6 @@ function initializeHeaderInteractions() {
     });
   }
 
-  // Cart hover preview
   const cartPreview = document.getElementById("cart-hover-preview");
   const cartLink = document.getElementById("cart-link");
   const cartCountBadge = document.getElementById("cart-count-badge");
@@ -268,8 +393,27 @@ function initializeHeaderInteractions() {
       cartPreview.style.display = "none";
     });
   }
-}
 
+  // --- FIX: Hover functionality for Language and Currency dropdowns ---
+  const dropdowns = document.querySelectorAll('#contact-info .dropdown');
+  dropdowns.forEach(dropdown => {
+    dropdown.addEventListener('mouseenter', () => {
+      // Show the dropdown menu on hover
+      const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+      if (dropdownMenu) {
+        dropdownMenu.style.display = 'block';
+      }
+    });
+
+    dropdown.addEventListener('mouseleave', () => {
+      // Hide the dropdown menu when the mouse leaves
+      const dropdownMenu = dropdown.querySelector('.dropdown-menu');
+      if (dropdownMenu) {
+        dropdownMenu.style.display = 'none';
+      }
+    });
+  });
+}
 // ==========================
 // Carousel GSAP animation
 // ==========================
@@ -316,3 +460,13 @@ function initializeCarousel() {
     }
   }
 }
+
+
+
+// Extra handlers for categories scroll buttons (legacy)
+document.querySelector(".scroll-left")?.addEventListener("click", () => {
+  document.querySelector(".categories-scroll")?.scrollBy({ left: -200, behavior: "smooth" });
+});
+document.querySelector(".scroll-right")?.addEventListener("click", () => {
+  document.querySelector(".categories-scroll")?.scrollBy({ left: 200, behavior: "smooth" });
+});

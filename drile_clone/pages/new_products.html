@@ -1,89 +1,409 @@
-<section class="py-5 text-center">
-  <h2 class="fw-bold mb-4">NEW PRODUCTS</h2>
-  <ul class="nav justify-content-center mb-5 category-nav">
-    <li class="nav-item"><a class="nav-link active" href="#">CHAIR</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">SOFA</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">LAMP</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">TABLE</a></li>
-    <li class="nav-item"><a class="nav-link" href="#">BED</a></li>
-  </ul>
-
+<section class="new-products-section">
   <div class="container">
-    <div class="row g-4 justify-content-center">
+    <h2 class="section-title">NEW PRODUCTS</h2>
+
+    <!-- Category Tabs -->
+    <ul class="nav justify-content-center mb-5 category-nav">
+      <li class="nav-item"><a class="nav-link category-btn active" href="#" data-category="chair">CHAIR</a></li>
+      <li class="nav-item"><a class="nav-link category-btn" href="#" data-category="sofa">SOFA</a></li>
       
-      <!-- CARD 1 -->
-      <div class="col-12 col-sm-6 col-lg-3">
+      <li class="nav-item"><a class="nav-link category-btn" href="#" data-category="lamp">LAMP</a></li>
+      <li class="nav-item"><a class="nav-link category-btn" href="#" data-category="table">TABLE</a></li>
+      <li class="nav-item"><a class="nav-link category-btn" href="#" data-category="bed">BED</a></li>
+    </ul>
+
+    <div class="row g-4" id="productsPlaceholder">
+
+      <!-- ===================== CHAIR ===================== -->
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="chair">
         <div class="product-card">
-          <div class="image-wrapper">
-            <img src="/drile_clone/assets/images/chair1a.jpg" class="main-img" alt="Chair 1">
-<img src="/drile_clone/assets/images/chair1b.jpg" class="hover-img" alt="Chair 1 Hover">
- 
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair1a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair1b.jpg" class="hover-img" alt="">
             <div class="icon-box">
-              <i class="fas fa-eye"></i>
-              <i class="fas fa-sync-alt"></i>
-              <i class="far fa-heart"></i>
-              <i class="fas fa-shopping-cart"></i>
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
             </div>
           </div>
-          <h6 class="mt-3">Vipp Armchair Black Leather</h6>
-          <p>$220.00</p>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 1</h5>
+            <p class="product-price">$200</p>
+          </div>
         </div>
       </div>
 
-      <!-- CARD 2 -->
-      <div class="col-12 col-sm-6 col-lg-3">
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="chair">
         <div class="product-card">
-          <div class="image-wrapper">
-            <img src="/drile_clone/assets/images/chair2a.jpg" class="main-img" alt="Chair 2">
-            <img src="/drile_clone/assets/images/chair2b.jpg" class="hover-img" alt="Chair 2 Hover">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair2a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair2b.jpg" class="hover-img" alt="">
             <div class="icon-box">
-              <i class="fas fa-eye"></i>
-              <i class="fas fa-sync-alt"></i>
-              <i class="far fa-heart"></i>
-              <i class="fas fa-shopping-cart"></i>
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
             </div>
           </div>
-          <h6 class="mt-3">Arne Dining Chair</h6>
-          <p>$350.00</p>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 2</h5>
+            <p class="product-price">$250</p>
+          </div>
         </div>
       </div>
 
-      <!-- CARD 3 -->
-      <div class="col-12 col-sm-6 col-lg-3">
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="chair">
         <div class="product-card">
-          <div class="image-wrapper">
-            <img src="/drile_clone/assets/images/chair3a.jpg" class="main-img" alt="Chair 3">
-            <img src="/drile_clone/assets/images/chair3b.jpg" class="hover-img" alt="Chair 3 Hover">
-            <div class="sale-badge">-20%</div>
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair3a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair3b.jpg" class="hover-img" alt="">
             <div class="icon-box">
-              <i class="fas fa-eye"></i>
-              <i class="fas fa-sync-alt"></i>
-              <i class="far fa-heart"></i>
-              <i class="fas fa-shopping-cart"></i>
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
             </div>
           </div>
-          <h6 class="mt-3">Slim Dining Chair</h6>
-          <p><del class="text-muted">$250.00</del> <span>$199.00</span></p>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 3</h5>
+            <p class="product-price">$220</p>
+          </div>
         </div>
       </div>
 
-      <!-- CARD 4 -->
-      <div class="col-12 col-sm-6 col-lg-3">
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="chair">
         <div class="product-card">
-          <div class="image-wrapper">
-            <img src="/drile_clone/assets/images/chair4a.jpg" class="main-img" alt="Chair 4">
-            <img src="/drile_clone/assets/images/chair4a.jpg" class="hover-img" alt="Chair 4 Hover">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair4a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair4b.jpg" class="hover-img" alt="">
             <div class="icon-box">
-              <i class="fas fa-eye"></i>
-              <i class="fas fa-sync-alt"></i>
-              <i class="far fa-heart"></i>
-              <i class="fas fa-shopping-cart"></i>
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
             </div>
           </div>
-          <h6 class="mt-3">Modern Outdoor Chair</h6>
-          <p>$150.00</p>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 4</h5>
+            <p class="product-price">$240</p>
+          </div>
         </div>
       </div>
+
+      <!-- ===================== SOFA ===================== -->
+         <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="sofa">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/client1.png" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair1b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 1</h5>
+            <p class="product-price">$200</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="sofa">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair2a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair2b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 2</h5>
+            <p class="product-price">$250</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="sofa">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair3a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair3b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 3</h5>
+            <p class="product-price">$220</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="sofa">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair4a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair4b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 4</h5>
+            <p class="product-price">$240</p>
+          </div>
+        </div>
+      </div>
+     
+
+      <!-- Repeat 3 more sofas with same icon-box -->
+
+      <!-- ===================== LAMP ===================== -->
+         <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="lamp">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/client2.png" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair1b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 1</h5>
+            <p class="product-price">$200</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="lamp">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair2a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair2b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 2</h5>
+            <p class="product-price">$250</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="lamp">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair3a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair3b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 3</h5>
+            <p class="product-price">$220</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="lamp">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair4a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair4b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 4</h5>
+            <p class="product-price">$240</p>
+          </div>
+        </div>
+      </div>
+      <!-- 4 lamps with same icon-box -->
+
+      <!-- ===================== TABLE ===================== -->
+         <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="table">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/client3.png" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair1b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 1</h5>
+            <p class="product-price">$200</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="table">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair2a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair2b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 2</h5>
+            <p class="product-price">$250</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="table">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair3a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair3b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 3</h5>
+            <p class="product-price">$220</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="table">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair4a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair4b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 4</h5>
+            <p class="product-price">$240</p>
+          </div>
+        </div>
+      </div>
+      <!-- 4 tables with same icon-box -->
+
+      <!-- ===================== BED ===================== -->
+         <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="bed">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/client4.png" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair1b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 1</h5>
+            <p class="product-price">$200</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="bed">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair2a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair2b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 2</h5>
+            <p class="product-price">$250</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="bed">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair3a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair3b.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 3</h5>
+            <p class="product-price">$220</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-sm-6 col-lg-3 product-item" data-category="bed">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/drile_clone/assets/images/chair4a.jpg" class="main-img" alt="">
+            <img src="/drile_clone/assets/images/chair4a.jpg" class="hover-img" alt="">
+            <div class="icon-box">
+              <i class="bi bi-heart"></i>
+              <i class="bi bi-arrow-left-right"></i>
+              <i class="bi bi-eye"></i>
+              <i class="bi bi-cart"></i>
+            </div>
+          </div>
+          <div class="product-info">
+            <h5 class="product-title">Chair Model 4</h5>
+            <p class="product-price">$240</p>
+          </div>
+        </div>
+      </div>
+      <!-- 4 beds with same icon-box -->
 
     </div>
   </div>
