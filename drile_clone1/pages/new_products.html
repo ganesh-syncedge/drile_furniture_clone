@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop - Furniture Products</title>
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
+    <!-- Bootstrap CSS from CDN for styling and responsiveness -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* General body and html styling */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden !important;
+        transition: transform 0.3s ease-in-out; /* Smooth transition for zoom */
+        transform-origin: top center; /* Ensure zoom originates from the top center */
+      }
+      html,
+      body {
+        height: 100%;
+        overflow-x: hidden !important;
+      }
+
+      /* Class for zoomed-in state */
+      body.zoomed-in {
+        transform: scale(1.1); /* Zoom in by 10% */
+      }
+
+      /* Product Card Styling */
+      .product-card {
+        text-align: center;
+        background: #fff;
+        position: relative;
+      }
+
+      /* Image Wrapper for Product Card */
+      .image-wrapper {
+        position: relative;
+        overflow: hidden;
+        border: 1px solid #eee;
+      }
+
+      .image-wrapper img {
+        width: 100%;
+        display: block;
+        transition: opacity 0.4s ease, filter 0.4s ease;
+      }
+
+      .image-wrapper .hover-img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        z-index: 1;
+        filter: blur(0px);
+      }
+
+      .product-card:hover .hover-img {
+        opacity: 1;
+        filter: blur(2px);
+      }
+
+      .product-card:hover .main-img {
+        opacity: 0;
+      }
+
+      /* Icon Box for Product Card (on hover) */
+      .icon-box {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px; /* Space between icons */
+        opacity: 0;
+        backdrop-filter: blur(6px);
+        padding: 10px;
+        transition: all 0.4s ease;
+        z-index: 2;
+      }
+
+      .product-card:hover .icon-box {
+        opacity: 1;
+      }
+
+      /* Icon Styling within Icon Box */
+      .icon-box i {
+        font-size: 16px;
+        cursor: pointer;
+        color: #000;
+        background: #fff;
+        padding: 8px;
+        border: 1px solid #ccc;
+        display: inline-block;
+        width: 36px;
+        height: 36px;
+        line-height: 20px;
+        text-align: center;
+        transition: transform 0.2s ease;
+      }
+
+      .icon-box i:hover {
+        transform: scale(1.1);
+      }
+
+      /* Sale Badge Styling */
+      .sale-badge {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: darkred;
+        color: white;
+        font-size: 14px;
+        padding: 2px 8px;
+        border-radius: 4px;
+        z-index: 3;
+      }
+
+      /* Styles for the new header layout (top row) */
+      .shop-header-top-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 1rem 0; /* Adjust padding as needed */
+        border-top: 1px solid #eee; /* Added border as seen in the image */
+        padding-top: 2rem;
+      }
+
+      .shop-main-title {
+        /* New class for SHOP heading */
+        text-align: left; /* Align SHOP to the left */
+        width: 100%; /* Take full width to ensure alignment */
+        padding-left: 15px; /* Add some left padding to match container */
+        margin-bottom: 1rem; /* Space below SHOP heading */
+      }
+
+      .shop-main-title h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0; /* Remove default h1 margin */
+      }
+
+      .shop-filters-and-sort {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 1rem; /* Space between dropdowns */
+      }
+
+      /* Style for "View N per page | Zoom in" */
+      .view-options-container {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.95rem;
+        color: #555;
+        white-space: nowrap;
+      }
+
+      .dropdown-toggle {
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-weight: bold;
+        background-color: #fff;
+        color: #000;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        font-size: 0.95rem; /* Match font size from image */
+      }
+
+      /* Specific styles for the "per page" dropdown to make it look like text */
+      .text-like-dropdown-toggle {
+        border: none !important;
+        padding: 0 !important;
+        background-color: transparent !important;
+        color: #555 !important; /* To match the surrounding text color */
+        font-weight: normal !important; /* To match the surrounding text weight */
+      }
+      .text-like-dropdown-toggle:hover {
+        background-color: transparent !important;
+        text-decoration: underline; /* Optional: add underline on hover for text-like feel */
+      }
+
+      .dropdown-menu {
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        font-size: 0.95rem;
+      }
+
+      /* Styles for the products viewed message (now above load more button) */
+      .shop-products-viewed-message {
+        text-align: center; /* Center the text */
+        margin-bottom: 1rem; /* Space below the message and above load more button */
+        margin-top: 2rem; /* Space above the message from products */
+      }
+      .shop-products-viewed-message p {
+        margin-bottom: 0; /* Remove default paragraph margin */
+        font-size: 0.95rem;
+        color: #555;
+      }
+
+      @media (max-width: 991px) {
+        /* Adjust breakpoint for header layout */
+        .shop-header-top-row {
+          flex-direction: column;
+          align-items: center; /* Center items when stacked */
+          gap: 1.5rem; /* More space between main sections when stacked */
+        }
+        .shop-main-title {
+          text-align: center; /* Center SHOP heading on smaller screens */
+          padding-left: 0;
+        }
+        .shop-main-title h1 {
+          font-size: 2rem; /* Slightly smaller for mobile */
+          width: 100%;
+        }
+        .shop-filters-and-sort {
+          width: 100%; /* Take full width */
+          justify-content: center; /* Center filter dropdowns */
+        }
+        .view-options-container {
+          text-align: center;
+          width: 100%;
+          justify-content: center;
+        }
+      }
+
+      /* Specific styles for the "SORT BY LATEST" button */
+      .sort-by-latest-btn {
+        border: 1px solid #000;
+        background-color: #fff;
+        color: #000;
+        font-weight: 600;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .sort-by-latest-btn:hover {
+        background-color: #000;
+        color: #fff;
+      }
+
+      /* Load More Button Styles */
+      .load-more-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 3rem; /* Adjusted to give space after the message */
+        margin-bottom: 3rem;
+        width: 100%;
+      }
+
+      .load-more-btn {
+        padding: 10px 30px;
+        font-size: 1rem;
+        font-weight: 600;
+        background-color: #fff;
+        color: #000;
+        border: 1px solid #000;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+
+      .load-more-btn:hover {
+        background-color: #000;
+        color: #fff;
+      }
+
+      /* New styles for the zoom button to make it look like text */
+      .zoom-toggle-btn {
+        border: none;
+        padding: 0;
+        background-color: transparent;
+        color: #555; /* To match the surrounding text color */
+        font-weight: normal; /* To match the surrounding text weight */
+        cursor: pointer; /* Keep cursor pointer to indicate interactivity */
+        transition: none; /* Remove transition for instant change */
+        margin-left: 0.5rem; /* Add some space from the "per page" text */
+      }
+
+      .zoom-toggle-btn:hover {
+        background-color: transparent;
+        color: #333; /* Slightly darker on hover */
+        text-decoration: underline; /* Add underline on hover */
+      }
+      .gallery-container-wrapper {
+        width: 100%;
+        margin: auto;
+        position: relative;
+        overflow: hidden;
+      }
+      .gallery-inner-scroll {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: hidden;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        scroll-behavior: smooth;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+      }
+      .gallery-inner-scroll::-webkit-scrollbar {
+        display: none;
+      }
+      .gallery-item {
+        flex: 0 0 auto;
+        width: 100%;
+        padding: 1rem;
+        position: relative;
+        border-radius: 0.5rem;
+        overflow: hidden;
+      }
+      .gallery-item img {
+        width: 100%;
+        height: 18rem;
+        object-fit: cover;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      /* Smooth animation hover overlay styling */
+      .card-overlay {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-radius: 0;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+        cursor: pointer;
+      }
+      .card-overlay h2,
+      .card-overlay p {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+      }
+      .gallery-item:hover .card-overlay {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .gallery-item:hover .card-overlay h2 {
+        font-size: 2rem;
+      }
+      .gallery-item:hover .card-overlay p {
+        font-size: 1rem;
+      }
+      .card-overlay h2 {
+        font-size: 6rem;
+        font-weight: 600;
+        margin: 0;
+        padding-bottom: 0.5rem;
+        transition: font-size 0.3s ease-in-out;
+      }
+      .card-overlay p {
+        font-size: 4rem;
+        font-weight: 400;
+        margin: 0;
+        transition: font-size 0.3s ease-in-out;
+      }
+
+      /* Ensure the main image doesn't get transformed on hover */
+      .gallery-item:hover img {
+        transform: none;
+      }
+
+      /* Responsive widths for items on larger screens */
+      @media (min-width: 768px) {
+        .gallery-inner-scroll {
+          padding-left: 12.5%;
+          padding-right: 12.5%;
+        }
+        .gallery-item {
+          flex: 0 0 33.333%;
+        }
+        .gallery-item img {
+          height: 500px;
+        }
+      }
+
+      /* Hide and animate the buttons */
+      .carousel-control-prev,
+      .carousel-control-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: white;
+        color: #6b7280;
+        padding: 0.75rem;
+        border-radius: 0.25rem;
+        border: none;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1),
+          0 1px 2px 0 rgba(0, 0, 0, 0.06);
+        z-index: 10;
+        opacity: 0; /* Hidden by default */
+        transition: all 0.3s ease-in-out;
+        width: 4rem;
+        height: 4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      /* Buttons fly in from the left and right */
+      .carousel-control-prev {
+        left: 0.5rem;
+        transform: translateX(-100%) translateY(-50%);
+      }
+      .carousel-control-next {
+        right: 0.5rem;
+        transform: translateX(100%) translateY(-50%);
+      }
+
+      /* Show buttons on hover of the wrapper */
+      .gallery-container-wrapper:hover .carousel-control-prev,
+      .gallery-container-wrapper:hover .carousel-control-next {
+        opacity: 1;
+        transform: translateX(0) translateY(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <div class="gallery-container-wrapper">
+        <div id="gallery-container" class="gallery-inner-scroll">
+          <div class="gallery-item">
+            <img
+              src="../assets/images/accessories.jpg"
+              alt="Green plant on a wooden desk"
+            />
+            <div class="card-overlay">
+              <h2>Accessories</h2>
+              <p>5 Products</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="../assets/images/lamp-1.jpg"
+              alt="Vase with branches on a wooden cabinet"
+            />
+            <div class="card-overlay">
+              <h2>Lamp</h2>
+              <p>6 Products</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="../assets/images/bed-1.jpg"
+              alt="Minimalist bed with white sheets"
+            />
+            <div class="card-overlay">
+              <h2>Bedroom</h2>
+              <p>12 Products</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img
+              src="../assets/images/chair.jpg"
+              alt="Wooden nightstand with a drawer"
+            />
+            <div class="card-overlay">
+              <h2>Chair</h2>
+              <p>18 Products</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="../assets/images/sofa.jpg" alt="Modern wooden stool" />
+            <div class="card-overlay">
+              <h2>Sofa</h2>
+              <p>8 Products</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="../assets/images/table-2.jpg" alt="Abstract art piece" />
+            <div class="card-overlay">
+              <h2>Table</h2>
+              <p>10 Products</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="../assets/images/cabinet.jpg" alt="Stylish chair" />
+            <div class="card-overlay">
+              <h2>Cabinet</h2>
+              <p>5 Products</p>
+            </div>
+          </div>
+        </div>
+        <button id="prev-btn" class="carousel-control-prev">
+          <span aria-hidden="true">&#10094;</span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button id="next-btn" class="carousel-control-next">
+          <span aria-hidden="true">&#10095;</span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </section>
+    <section class="py-5 text-center">
+      <div class="container">
+        <div class="shop-main-title">
+          <h1>SHOP</h1>
+        </div>
+        <div class="shop-header-top-row">
+          <div class="view-options-container">
+            View
+            <div class="dropdown">
+              <button
+                class="dropdown-toggle text-like-dropdown-toggle"
+                type="button"
+                id="productsPerPageDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                16
+              </button>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="productsPerPageDropdown"
+                data-filter-type="per-page"
+              >
+                <li>
+                  <a class="dropdown-item" href="#" data-per-page="16">16</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-per-page="24">24</a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-per-page="32">32</a>
+                </li>
+              </ul>
+            </div>
+            per page |
+            <button id="zoomToggleBtn" class="zoom-toggle-btn">
+              Zoom in <i class="fas fa-search-plus"></i>
+            </button>
+          </div>
+          <div class="shop-filters-and-sort">
+            <div class="dropdown">
+              <button
+                class="dropdown-toggle"
+                type="button"
+                id="categoriesDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                CATEGORIES
+              </button>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="categoriesDropdown"
+                data-filter-type="category"
+              >
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="All"
+                    >All</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="CHAIR"
+                    >CHAIR</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="SOFA"
+                    >SOFA</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="LAMP"
+                    >LAMP</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="TABLE"
+                    >TABLE</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="BED"
+                    >BED</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <button
+                class="dropdown-toggle"
+                type="button"
+                id="priceDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                PRICE
+              </button>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="priceDropdown"
+                data-filter-type="price"
+              >
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="All"
+                    >All</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="0-100"
+                    >$0 - $100</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="101-300"
+                    >$101 - $300</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="301+"
+                    >$301+</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <button
+                class="dropdown-toggle"
+                type="button"
+                id="colorDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                COLOR
+              </button>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="colorDropdown"
+                data-filter-type="color"
+              >
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="All"
+                    >All</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="Black"
+                    >Black</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="White"
+                    >White</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="Brown"
+                    >Brown</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <button
+                class="dropdown-toggle"
+                type="button"
+                id="materialDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                MATERIAL
+              </button>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="materialDropdown"
+                data-filter-type="material"
+              >
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="All"
+                    >All</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="Wood"
+                    >Wood</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="Leather"
+                    >Leather</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="Metal"
+                    >Metal</a
+                  >
+                </li>
+              </ul>
+            </div>
+            <div class="dropdown">
+              <button
+                class="dropdown-toggle sort-by-latest-btn"
+                type="button"
+                id="sortByDropdown"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                SORT BY LATEST
+              </button>
+              <ul
+                class="dropdown-menu"
+                aria-labelledby="sortByDropdown"
+                data-filter-type="sort"
+              >
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="latest"
+                    >Latest</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-filter-value="price-asc"
+                    >Price: Low to High</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-filter-value="price-desc"
+                    >Price: High to Low</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#" data-filter-value="name-asc"
+                    >Name: A-Z</a
+                  >
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item"
+                    href="#"
+                    data-filter-value="name-desc"
+                    >Name: Z-A</a
+                  >
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row g-4 justify-content-center" id="product-list">
+          <!-- Product cards will be rendered here by JavaScript -->
+        </div>
+        <div class="shop-products-viewed-message">
+          <p id="products-viewed-text">You've viewed 0 of 0 products</p>
+        </div>
+        <div class="load-more-container">
+          <button id="load-more-btn" class="load-more-btn">LOAD MORE</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bootstrap JS from CDN (optional, but good practice if you plan to add interactive Bootstrap components) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdarxHVQGqQ55U6s/d"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const galleryContainer = document.getElementById("gallery-container");
+        const galleryWrapper = document.querySelector(
+          ".gallery-container-wrapper"
+        );
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+
+        let originalItems = Array.from(
+          galleryContainer.querySelectorAll(".gallery-item")
+        );
+        const totalOriginalItems = originalItems.length;
+        const visibleItems = window.innerWidth >= 768 ? 4 : 1;
+
+        let autoSlideInterval;
+        const autoSlideIntervalDuration = 3000; // 3 seconds
+
+        let isScrolling = false;
+
+        const getItemWidth = () => {
+          const firstItem = galleryContainer.querySelector(".gallery-item");
+          return firstItem ? firstItem.offsetWidth : 0;
+        };
+
+        const cloneItems = () => {
+          galleryContainer
+            .querySelectorAll(".cloned")
+            .forEach((clone) => clone.remove());
+
+          const startClones = originalItems.slice(-visibleItems).map((item) => {
+            const clone = item.cloneNode(true);
+            clone.classList.add("cloned");
+            return clone;
+          });
+
+          const endClones = originalItems.slice(0, visibleItems).map((item) => {
+            const clone = item.cloneNode(true);
+            clone.classList.add("cloned");
+            return clone;
+          });
+
+          startClones
+            .reverse()
+            .forEach((clone) => galleryContainer.prepend(clone));
+          endClones.forEach((clone) => galleryContainer.appendChild(clone));
+        };
+
+        const handleScrollLooping = () => {
+          const itemWidth = getItemWidth();
+          const currentScroll = galleryContainer.scrollLeft;
+
+          if (
+            currentScroll >=
+            (totalOriginalItems + visibleItems) * itemWidth
+          ) {
+            galleryContainer.style.scrollBehavior = "auto";
+            galleryContainer.scrollLeft =
+              currentScroll - totalOriginalItems * itemWidth;
+          } else if (currentScroll < visibleItems * itemWidth) {
+            galleryContainer.style.scrollBehavior = "auto";
+            galleryContainer.scrollLeft =
+              currentScroll + totalOriginalItems * itemWidth;
+          }
+        };
+
+        const debounce = (func, delay) => {
+          let timeout;
+          return function (...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+              func.apply(this, args);
+            }, delay);
+          };
+        };
+
+        const performSlide = (direction) => {
+          const itemWidth = getItemWidth();
+          const targetScroll =
+            galleryContainer.scrollLeft +
+            (direction === "next" ? itemWidth : -itemWidth);
+
+          galleryContainer.style.scrollBehavior = "smooth";
+          galleryContainer.scrollLeft = targetScroll;
+        };
+
+        const handleButtonClick = (direction) => {
+          if (isScrolling) return;
+          isScrolling = true;
+
+          performSlide(direction);
+
+          setTimeout(() => {
+            isScrolling = false;
+          }, 300);
+        };
+
+        const startAutoSlide = () => {
+          stopAutoSlide(); // Clear any existing interval first
+          autoSlideInterval = setInterval(() => {
+            performSlide("next");
+          }, autoSlideIntervalDuration);
+        };
+
+        const stopAutoSlide = () => {
+          clearInterval(autoSlideInterval);
+        };
+
+        const initializeGallery = () => {
+          cloneItems();
+          const itemWidth = getItemWidth();
+          galleryContainer.style.scrollBehavior = "auto";
+          galleryContainer.scrollLeft = itemWidth * visibleItems;
+          setTimeout(() => {
+            galleryContainer.style.scrollBehavior = "smooth";
+          }, 100);
+        };
+
+        // Event listeners
+        nextBtn.addEventListener("click", () => {
+          stopAutoSlide();
+          handleButtonClick("next");
+          startAutoSlide();
+        });
+
+        prevBtn.addEventListener("click", () => {
+          stopAutoSlide();
+          handleButtonClick("prev");
+          startAutoSlide();
+        });
+
+        galleryWrapper.addEventListener("mouseenter", stopAutoSlide);
+        galleryWrapper.addEventListener("mouseleave", startAutoSlide);
+
+        galleryContainer.addEventListener(
+          "scroll",
+          debounce(handleScrollLooping, 50)
+        );
+
+        window.addEventListener("resize", () => {
+          isScrolling = true;
+          initializeGallery();
+          isScrolling = false;
+        });
+
+        initializeGallery();
+        startAutoSlide();
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Data for products (using placeholder images and expanded for more items)
+        const productsData = [
+          {
+            id: "lamp01",
+            name: "Globe Electric Tech Series",
+            price: 460.0,
+            category: "LAMP",
+            color: "Black",
+            material: "Metal",
+            mainImg: "../assets/images/lamp-01.jpg",
+            hoverImg: "../assets/images/lamp-01-hover.jpg ",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "chair02",
+            name: "Cylindo Assent Arm Chair",
+            price: 699.0,
+            category: "CHAIR",
+            color: "Blue",
+            material: "Wood",
+            mainImg: "../assets/images/chair-01.jpg",
+            hoverImg: "../assets/images/chair-01-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "box03",
+            name: "Stacking Storage Box",
+            price: 600.0,
+            category: "BOX",
+            color: "BROWN",
+            material: "WOOD",
+            mainImg: "../assets/images/box-01.jpg",
+            hoverImg:
+              "../assets/images/box-01-hover.jpg",
+            sale: true,
+            originalPrice: 750.0,
+          },
+          {
+            id: "Drawer04",
+            name: "Stacking Drawer",
+            price: 600.0,
+            category: "DRAWER",
+            color: "BROWN",
+            material: "WOOD",
+            mainImg: "../assets/images/drawer-01.jpg",
+            hoverImg:
+              "../assets/images/drawer-01-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "sofa01",
+            name: "Cylindo Fabric Sofa",
+            price: 1000.0,
+            category: "SOFA",
+            color: "Grey",
+            material: "Fabric",
+            mainImg: "../assets/images/sofa-01.jpg",
+            hoverImg: "../assets/images/sofa-01-hover.jpg",
+            sale: true,
+            originalPrice: 1499.0,
+          },
+          {
+            id: "lamp02",
+            name: "Vipp Pendent",
+            price: 500.0,
+            category: "LAMP",
+            color: "White",
+            material: "Plastic",
+            mainImg: "../assets/images/lamp-02.jpg",
+            hoverImg: "../assets/images/lamp-02-hover.jpg",
+            sale: true,
+            originalPrice: 600,
+          },
+          {
+            id: "table01",
+            name: "Draht hocker Sidetable",
+            price: 299.0,
+            category: "TABLE",
+            color: "Clear",
+            material: "Glass",
+            mainImg: "../assets/images/chair-02.jpg",
+            hoverImg:
+              "../assets/images/chair-02-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "chair03",
+            name: "Vipp Armchair Black Leather",
+            price: 220.0,
+            category: "BED",
+            color: "Light Wood",
+            material: "Wood",
+            mainImg: "../assets/images/chair-03.jpg",
+            hoverImg: "../assets/images/chair-03-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "Bed01",
+            name: "Modway Olivia Bed",
+            price: 1200.0,
+            category: "BED",
+            color: "PINK",
+            material: "Fabric",
+            mainImg: "../assets/images/bed-01.jpg",
+            hoverImg:
+              "../assets/images/bed-01-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "Bed02",
+            name: "Gwynet Velvet King Bed",
+            price: 1200.0,
+            category: "BED",
+            color: "Blue",
+            material: "Fabric",
+            mainImg: "../assets/images/bed-02.jpg",
+            hoverImg: "../assets/images/bed-02-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "lamp03",
+            name: "Vipp Desk Lamp",
+            price: 400.0,
+            category: "LAMP",
+            color: "Black",
+            material: "Metal",
+            mainImg: "../assets/images/lamp-03.jpg",
+            hoverImg: "../assets/images/lamp-03-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "Bed03",
+            name: "Upholdster Bed",
+            price: 1300.0,
+            category: "BED",
+            color: "White",
+            material: "fabric",
+            mainImg: "../assets/images/bed-03.jpg",
+            hoverImg:
+              "../assets/images/bed-03-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "chair03",
+            name: "Arne Dining Chair",
+            price: 200.0,
+            category: "CHAIR",
+            color: "Dark Grey",
+            material: "Wood",
+            mainImg: "../assets/images/chair-04.jpg",
+            hoverImg: "../assets/images/chair-04-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "clock01",
+            name: "Klosh Wall Clock",
+            price: 120.0,
+            category: "CLOCK",
+            color: "Black",
+            material: "Wood",
+            mainImg: "../assets/images/clock-01.jpg",
+            hoverImg:
+              "../assets/images/clock-01-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "table02",
+            name: "Vasagle Vanity Table",
+            price: 1400.0,
+            category: "TABLE",
+            color: "Green",
+            material: "Wood",
+            mainImg: "../assets/images/table-02.jpg",
+            hoverImg: "../assets/images/table-02-hover.jpg",
+            sale: true,
+            originalPrice: 1750.0,
+          },
+          {
+            id: "table03",
+            name: "Modern Side Table",
+            price: 550.0,
+            category: "TABLE",
+            color: "BROWN",
+            material: "Wood",
+            mainImg: "../assets/images/table-03.jpg",
+            hoverImg: "../assets/images/table-03-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "blanket-01",
+            name: "Vipp Wool Blanket",
+            price: 80.0,
+            category: "BLANKET",
+            color: "Grey",
+            material: "Fabric",
+            mainImg: "../assets/images/blanket-01.jpg",
+            hoverImg:
+              "../assets/images/blanket-01-hover.jpg",
+            sale: true,
+            originalPrice: 100.0,
+          },
+          {
+            id: "table04",
+            name: "Bundle Desk",
+            price: 750.0,
+            category: "TABLE",
+            color: "Natural Wood",
+            material: "Wood",
+            mainImg: "../assets/images/table-04.jpg",
+            hoverImg: "../assets/images/table-04-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "chair05",
+            name: "Slim Dining Chair",
+            price: 199.0,
+            category: "CHAIR",
+            color: "Brown",
+            material: "Plastic",
+            mainImg: "../assets/images/chair-05.jpg",
+            hoverImg:
+              "../assets/images/chair-05-hover.jpg",
+            sale: true,
+            originalPrice: 250.0,
+          },
+          {
+            id: "chair06",
+            name: "Modern Outdoor Chair",
+            price: 150.0,
+            category: "CHAIR",
+            color: "Brown",
+            material: "Metal",
+            mainImg: "../assets/images/chair-06.jpg",
+            hoverImg: "../assets/images/chair-06-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "box02",
+            name: "Zen Tissue Box and Desk",
+            price: 90.0,
+            category: "BOX",
+            color: "Clear",
+            material: "Wood",
+            mainImg: "../assets/images/box-02.jpg",
+            hoverImg: "../assets/images/box-02.jpg",
+            sale: true,
+            originalPrice: null,
+          },
+          {
+            id: "sofa02",
+            name: "Ottoman for Loft Sofa",
+            price: 499.0,
+            category: "SOFA",
+            color: "Wood",
+            material: "Wood",
+            mainImg: "../assets/images/sofa-02.jpg",
+            hoverImg:
+              "../assets/images/sofa-02-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "table05",
+            name: "Solid Wood Side Tables",
+            price: 350.0,
+            category: "BED",
+            color: "Cream",
+            material: "Wood",
+            mainImg: "../assets/images/table-05.jpg",
+            hoverImg: "../assets/images/table-05-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "sofa03",
+            name: "haikyu 2-seater Sofa",
+            price: 1599.0,
+            category: "SOFA",
+            color: "Red",
+            material: "Faux Leather",
+            mainImg: "../assets/images/sofa-03.jpg",
+            hoverImg:
+              "../assets/images/sofa-03-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "table06",
+            name: "Simple Coffee Table",
+            price: 600.0,
+            category: "TABLE",
+            color: "Dark Blue",
+            material: "Wood",
+            mainImg: "../assets/images/table-06.jpg",
+            hoverImg: "../assets/images/table-06-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "sofa04",
+            name: "Fabric Outdoor Sofa",
+            price: 799.0,
+            category: "SOFA",
+            color: "Warm White",
+            material: "Plastic",
+            mainImg: "../assets/images/sofa-04.jpg",
+            hoverImg: "../assets/images/sofa-04-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "sofa05",
+            name: "Loft Sofa 2-Seater",
+            price: 1500.0,
+            category: "SOFA",
+            color: "Black",
+            material: "Fabric",
+            mainImg: "../assets/images/sofa-05.jpg",
+            hoverImg:
+              "../assets/images/sofa-05-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "sofa06",
+            name: "Loft Sofa With Ottoman",
+            price: 1500.0,
+            category: "Sofa",
+            color: "Black",
+            material: "Fabric",
+            mainImg: "../assets/images/sofa-05-hover.jpg",
+            hoverImg: "../assets/images/sofa-05.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "box03",
+            name: "Modern Side Boards",
+            price: 300.0,
+            category: "Box",
+            color: "Brown",
+            material: "Wicker",
+            mainImg: "../assets/images/box-03.jpg",
+            hoverImg:
+              "../assets/images/box-03-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "pillow01",
+            name: "Vipp Wool Pillow",
+            price: 79.0,
+            category: "SOFA",
+            color: "Brown",
+            material: "Leather",
+            mainImg: "../assets/images/pillow-01.jpg",
+            hoverImg: "../assets/images/pillow-01-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "clock02",
+            name: "Klosh table clock",
+            price: 110.0,
+            category: "Clock",
+            color: "Gold",
+            material: "Metal",
+            mainImg: "../assets/images/clock-02.jpg",
+            hoverImg: "../assets/images/clock-02-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "lamp-03",
+            name: "Birdy Pendant Lamp",
+            price: 399.0,
+            category: "LAMP",
+            color: "Black",
+            material: "Metal",
+            mainImg: "../assets/images/lamp-03.jpg",
+            hoverImg:
+              "../assets/images/lamp-03-hover.jpg",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "bed06",
+            name: "Canopy Bed Frame",
+            price: 1800.0,
+            category: "BED",
+            color: "White",
+            material: "Metal",
+            mainImg: "https://placehold.co/300x300/e0e0e0/000000?text=Bed06A",
+            hoverImg: "https://placehold.co/300x300/d0d0d0/000000?text=Bed06B",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "chair10",
+            name: "Papasan Chair",
+            price: 180.0,
+            category: "CHAIR",
+            color: "Natural",
+            material: "Rattan",
+            mainImg: "https://placehold.co/300x300/e0e0e0/000000?text=Chair10A",
+            hoverImg:
+              "https://placehold.co/300x300/d0d0d0/000000?text=Chair10B",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "sofa07",
+            name: "Sleeper Sofa Convertible",
+            price: 900.0,
+            category: "SOFA",
+            color: "Grey",
+            material: "Fabric",
+            mainImg: "https://placehold.co/300x300/e0e0e0/000000?text=Sofa07A",
+            hoverImg: "https://placehold.co/300x300/d0d0d0/000000?text=Sofa07B",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "lamp08",
+            name: "Salt Lamp Himalayan",
+            price: 40.0,
+            category: "LAMP",
+            color: "Pink",
+            material: "Crystal",
+            mainImg: "https://placehold.co/300x300/e0e0e0/000000?text=Lamp08A",
+            hoverImg: "https://placehold.co/300x300/d0d0d0/000000?text=Lamp08B",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "table07",
+            name: "Expandable Dining Table",
+            price: 700.0,
+            category: "TABLE",
+            color: "Wood",
+            material: "Wood",
+            mainImg: "https://placehold.co/300x300/e0e0e0/000000?text=Table07A",
+            hoverImg:
+              "https://placehold.co/300x300/d0d0d0/000000?text=Table07B",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "bed07",
+            name: "Murphy Bed Wall Mount",
+            price: 2000.0,
+            category: "BED",
+            color: "White",
+            material: "Wood",
+            mainImg: "https://placehold.co/300x300/e0e0e0/000000?text=Bed07A",
+            hoverImg: "https://placehold.co/300x300/d0d0d0/000000?text=Bed07B",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "chair11",
+            name: "Director's Chair",
+            price: 70.0,
+            category: "CHAIR",
+            color: "Black",
+            material: "Wood",
+            mainImg: "https://placehold.co/300x300/e0e0e0/000000?text=Chair11A",
+            hoverImg:
+              "https://placehold.co/300x300/d0d0d0/000000?text=Chair11B",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "sofa08",
+            name: "Futon Sofa Bed",
+            price: 400.0,
+            category: "SOFA",
+            color: "Black",
+            material: "Fabric",
+            mainImg: "https://placehold.co/300x300/e0e0e0/000000?text=Sofa08A",
+            hoverImg: "https://placehold.co/300x300/d0d0d0/000000?text=Sofa08B",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "lamp09",
+            name: "Desk Lamp LED",
+            price: 60.0,
+            category: "LAMP",
+            color: "White",
+            material: "Plastic",
+            mainImg: "https://placehold.co/300x300/e0e0e0/000000?text=Lamp09A",
+            hoverImg: "https://placehold.co/300x300/d0d0d0/000000?text=Lamp09B",
+            sale: false,
+            originalPrice: null,
+          },
+          {
+            id: "table08",
+            name: "Round Coffee Table",
+            price: 120.0,
+            category: "TABLE",
+            color: "Brown",
+            material: "Wood",
+            mainImg: "https://placehold.co/300x300/e0e0e0/000000?text=Table08A",
+            hoverImg:
+              "https://placehold.co/300x300/d0d0d0/000000?text=Table08B",
+            sale: false,
+            originalPrice: null,
+          },
+        ];
+
+        // Current filter selections
+        const currentFilters = {
+          category: "All",
+          price: "All",
+          color: "All",
+          material: "All",
+          sort: "latest", // Default sort
+        };
+
+        let productsPerPage = 16; // Initial products to show, now dynamic
+        const productsPerLoad = 8; // Products to load on "Load More" click
+        let currentlyDisplayedProductsCount = 0; // Track how many products are currently shown
+        let filteredAndSortedProducts = []; // Stores products after filters and sort are applied
+        let isZoomedIn = false; // Track zoom state
+
+        const productListContainer = document.getElementById("product-list");
+        const loadMoreBtn = document.getElementById("load-more-btn");
+        const productsViewedText = document.getElementById(
+          "products-viewed-text"
+        );
+        const productsPerPageBtn = document.getElementById(
+          "productsPerPageDropdown"
+        );
+        const zoomToggleBtn = document.getElementById("zoomToggleBtn"); // Get the zoom button element
+
+        /**
+         * Renders a batch of product cards into the DOM.
+         * @param {Array<Object>} productsToRender - An array of product objects to display.
+         */
+        function appendProducts(productsToRender) {
+          productsToRender.forEach((product) => {
+            const productCardHtml = `
+            <div class="col-12 col-sm-6 col-lg-3">
+              <div class="product-card">
+                <div class="image-wrapper">
+                  <img src="${product.mainImg}" class="main-img" alt="${
+              product.name
+            }" onerror="this.onerror=null;this.src='https://placehold.co/300x300/e0e0e0/000000?text=Image+Error';">
+                  <img src="${product.hoverImg}" class="hover-img" alt="${
+              product.name
+            } Hover" onerror="this.onerror=null;this.src='https://placehold.co/300x300/d0d0d0/000000?text=Image+Error';">
+                  ${product.sale ? '<div class="sale-badge">-20%</div>' : ""}
+                  <div class="icon-box">
+                    <i class="fas fa-eye"></i>
+                    <i class="fas fa-sync-alt"></i>
+                    <i class="far fa-heart"></i>
+                    <i class="fas fa-shopping-cart"></i>
+                  </div>
+                </div>
+                <h6 class="mt-3">${product.name}</h6>
+                <p>
+                  ${
+                    product.originalPrice
+                      ? `<del class="text-muted">$${product.originalPrice.toFixed(
+                          2
+                        )}</del> `
+                      : ""
+                  }
+                  <span>$${product.price.toFixed(2)}</span>
+                </p>
+              </div>
+            </div>
+          `;
+            productListContainer.insertAdjacentHTML(
+              "beforeend",
+              productCardHtml
+            );
+          });
+        }
+
+        /**
+         * Updates the "You've viewed X of Y products" text.
+         * @param {number} viewedCount - Number of products currently visible.
+         * @param {number} totalCount - Total number of products after filtering.
+         */
+        function updateProductsViewedText(viewedCount, totalCount) {
+          productsViewedText.textContent = `You've viewed ${viewedCount} of ${totalCount} products`;
+        }
+
+        /**
+         * Handles the "Load More" button click.
+         * Displays the next batch of products.
+         */
+        function loadMoreProducts() {
+          const remainingProducts =
+            filteredAndSortedProducts.length - currentlyDisplayedProductsCount;
+          const productsToLoad = Math.min(productsPerLoad, remainingProducts);
+
+          if (productsToLoad > 0) {
+            const newProducts = filteredAndSortedProducts.slice(
+              currentlyDisplayedProductsCount,
+              currentlyDisplayedProductsCount + productsToLoad
+            );
+            appendProducts(newProducts);
+            currentlyDisplayedProductsCount += productsToLoad;
+            updateProductsViewedText(
+              currentlyDisplayedProductsCount,
+              filteredAndSortedProducts.length
+            );
+          }
+
+          // Hide the button if all products are displayed
+          if (
+            currentlyDisplayedProductsCount >= filteredAndSortedProducts.length
+          ) {
+            loadMoreBtn.style.display = "none";
+          } else {
+            loadMoreBtn.style.display = "block"; // Ensure button is visible if there are more products
+          }
+        }
+
+        /**
+         * Applies current filters and sort order to the products data.
+         * Then, initializes the display with the first batch of products.
+         */
+        function applyFiltersAndSort() {
+          // Reset displayed products count and clear container
+          currentlyDisplayedProductsCount = 0;
+          productListContainer.innerHTML = "";
+
+          // Apply Filters
+          filteredAndSortedProducts = productsData.filter((product) => {
+            let matchesCategory =
+              currentFilters.category === "All" ||
+              product.category === currentFilters.category;
+            let matchesColor =
+              currentFilters.color === "All" ||
+              product.color === currentFilters.color;
+            let matchesMaterial =
+              currentFilters.material === "All" ||
+              product.material === currentFilters.material;
+            let matchesPrice = true;
+
+            if (currentFilters.price !== "All") {
+              const price = product.price;
+              if (currentFilters.price === "0-100") {
+                matchesPrice = price >= 0 && price <= 100;
+              } else if (currentFilters.price === "101-300") {
+                matchesPrice = price >= 101 && price <= 300;
+              } else if (currentFilters.price === "301+") {
+                matchesPrice = price >= 301;
+              }
+            }
+            return (
+              matchesCategory && matchesColor && matchesMaterial && matchesPrice
+            );
+          });
+
+          // Apply Sorting
+          filteredAndSortedProducts.sort((a, b) => {
+            if (currentFilters.sort === "latest") {
+              // For 'latest', we'll rely on the original order,
+              // For this example, we'll maintain the initial order if 'latest' is selected.
+              return 0; // Keep original order for "latest"
+            } else if (currentFilters.sort === "price-asc") {
+              return a.price - b.price;
+            } else if (currentFilters.sort === "price-desc") {
+              return b.price - a.price;
+            } else if (currentFilters.sort === "name-asc") {
+              return a.name.localeCompare(b.name);
+            } else if (currentFilters.sort === "name-desc") {
+              return b.name.localeCompare(a.name);
+            }
+            return 0;
+          });
+
+          // Display the first batch of products based on productsPerPage
+          const initialProducts = filteredAndSortedProducts.slice(
+            0,
+            productsPerPage
+          );
+          appendProducts(initialProducts);
+          currentlyDisplayedProductsCount = initialProducts.length;
+
+          // Update text and visibility of load more button
+          updateProductsViewedText(
+            currentlyDisplayedProductsCount,
+            filteredAndSortedProducts.length
+          );
+          if (
+            currentlyDisplayedProductsCount < filteredAndSortedProducts.length
+          ) {
+            loadMoreBtn.style.display = "block";
+          } else {
+            loadMoreBtn.style.display = "none";
+          }
+
+          // Hide the "Load More" button if no products are found after filtering
+          if (filteredAndSortedProducts.length === 0) {
+            loadMoreBtn.style.display = "none";
+          }
+        }
+
+        // Add event listeners to all dropdown menu items for filtering
+        document
+          .querySelectorAll(".dropdown-menu .dropdown-item")
+          .forEach((item) => {
+            item.addEventListener("click", function (event) {
+              event.preventDefault(); // Prevent default link behavior
+
+              const filterType =
+                this.closest(".dropdown-menu").dataset.filterType;
+              const filterValue = this.dataset.filterValue;
+              const dropdownButton =
+                this.closest(".dropdown").querySelector(".dropdown-toggle");
+
+              if (filterType === "per-page") {
+                // Handle "products per page" dropdown
+                productsPerPage = parseInt(this.dataset.perPage);
+                productsPerPageBtn.textContent = this.textContent; // Update the "16" button text
+                applyFiltersAndSort(); // Re-apply filters and reset display
+              } else if (filterType && filterValue) {
+                // Handle other filter dropdowns (category, price, color, material, sort)
+                currentFilters[filterType] = filterValue;
+                dropdownButton.textContent = this.textContent; // Update button text
+                applyFiltersAndSort(); // Re-apply filters and reset display
+              }
+            });
+          });
+
+        // Toggle zoom functionality
+        zoomToggleBtn.addEventListener("click", () => {
+          isZoomedIn = !isZoomedIn;
+          if (isZoomedIn) {
+            document.body.classList.add("zoomed-in");
+            zoomToggleBtn.innerHTML =
+              'Zoom out <i class="fas fa-search-minus"></i>';
+          } else {
+            document.body.classList.remove("zoomed-in");
+            zoomToggleBtn.innerHTML =
+              'Zoom in <i class="fas fa-search-plus"></i>';
+          }
+        });
+
+        // Add event listener for the "Load More" button
+        loadMoreBtn.addEventListener("click", loadMoreProducts);
+
+        // Initial render of products when the page loads
+        applyFiltersAndSort();
+      });
+    </script>
+  </body>
+</html>

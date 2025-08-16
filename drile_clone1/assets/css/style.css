@@ -1,0 +1,38 @@
+/* Base Carousel Styling */
+.carousel-item img {
+  height: 100vh;
+  object-fit: cover;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 25%;
+  left: 10%;
+  text-align: left;
+}
+
+/* Animation Effects */
+.custom-anim .slide-title {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s ease forwards;
+}
+
+.custom-anim .slide-text {
+  opacity: 0;
+  transform: translateY(50px);
+  animation: fadeUp 1.2s ease forwards;
+}
+
+.custom-anim .btn {
+  opacity: 0;
+  transform: translateY(70px);
+  animation: fadeUp 1.4s ease forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

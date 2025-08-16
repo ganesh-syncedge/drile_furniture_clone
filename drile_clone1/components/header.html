@@ -1,0 +1,451 @@
+<!-- Contact Info Bar (visible on desktop only) -->
+<div id="contact-info" class="bg-white py-2 d-none">
+  <div
+    class="container-fluid d-flex justify-content-between align-items-center px-3 flex-wrap"
+  >
+    <!-- Left: Contact -->
+    <div class="text-dark fw-medium">
+      <i class="bi bi-telephone-fill me-2"></i> Contact us: +91-9876543210
+    </div>
+
+    <!-- Right: Language and Currency -->
+    <div class="d-flex gap-3 mt-2 mt-md-0">
+      <!-- Language Dropdown -->
+      <div class="dropdown">
+        <a
+          class="text-dark fw-medium dropdown-toggle no-caret"
+          href="#"
+          id="languageDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Language <i class="bi bi-chevron-down ms-1"></i>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="languageDropdown"
+        >
+          <li><a class="dropdown-item" href="#">English</a></li>
+          <li><a class="dropdown-item" href="#">हिंदी</a></li>
+          <li><a class="dropdown-item" href="#">Français</a></li>
+        </ul>
+      </div>
+
+      <!-- Currency Dropdown -->
+      <div class="dropdown">
+        <a
+          class="text-dark fw-medium dropdown-toggle no-caret"
+          href="#"
+          id="currencyDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Currency <i class="bi bi-chevron-down ms-1"></i>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-end"
+          aria-labelledby="currencyDropdown"
+        >
+          <li><a class="dropdown-item" href="#">INR ₹</a></li>
+          <li><a class="dropdown-item" href="#">USD $</a></li>
+          <li><a class="dropdown-item" href="#">EUR €</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Header Navbar -->
+<header class="bg-white py-4">
+  <div
+    class="container d-flex align-items-center flex-wrap justify-content-between"
+  >
+    <!-- Logo -->
+    <a href="#" class="navbar-brand m-0" style="padding-left: 10px">
+      <img
+        src="https://drile-be87.kxcdn.com/drile/wp-content/themes/drile/images/logo.png"
+        alt="Drile Logo"
+        style="height: 40px; width: auto"
+        onerror="this.onerror=null;this.src='https://placehold.co/100x40/EAEAEA/333?text=Drile';"
+      />
+    </a>
+
+    <!-- Navigation Menu (Desktop only) -->
+    <nav class="flex-grow-1 ms-4 d-none d-lg-block">
+      <ul class="nav">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle no-caret"
+            href="#"
+            data-bs-toggle="dropdown"
+          >
+            Home <i class="bi bi-chevron-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="../index.html">HOME 1</a></li>
+            <li>
+              <a class="dropdown-item" href="/drile_clone/home-alt.html"
+                >Alternate Home</a
+              >
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle no-caret"
+            href="#"
+            data-bs-toggle="dropdown"
+          >
+            Shop <i class="bi bi-chevron-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">All Products</a></li>
+            <li><a class="dropdown-item" href="#">Sale</a></li>
+          </ul>
+        </li>
+
+        <!-- ✅ PRODUCT: 2 Columns, 5 Items Each -->
+        <!-- ✅ PRODUCT: 2 Columns, 5 Items Each - Reduced Gap -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle no-caret"
+            href="#"
+            data-bs-toggle="dropdown"
+          >
+            Product <i class="bi bi-chevron-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu px-2 py-3" style="min-width: 350px">
+            <div class="row gx-2">
+              <!-- gx-2 reduces horizontal column gap -->
+              <div class="col-6">
+                <li><a class="dropdown-item" href="#">Product Style 1</a></li>
+                <li><a class="dropdown-item" href="#">Product Style 2</a></li>
+                <li><a class="dropdown-item" href="#">Product Style 3</a></li>
+                <li><a class="dropdown-item" href="#">Product Style 4</a></li>
+                <li><a class="dropdown-item" href="#">Product Style 5</a></li>
+              </div>
+              <div class="col-6">
+                <li><a class="dropdown-item" href="#">Product Style 6</a></li>
+                <li><a class="dropdown-item" href="#">Product Style 7</a></li>
+                <li><a class="dropdown-item" href="#">Product Style 8</a></li>
+                <li><a class="dropdown-item" href="#">Compare Products</a></li>
+                <li><a class="dropdown-item" href="#">Product Reviews</a></li>
+              </div>
+            </div>
+          </ul>
+        </li>
+
+        <!-- ✅ BLOG: 1 Column, 4 Items -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle no-caret"
+            href="#"
+            data-bs-toggle="dropdown"
+          >
+            Blog <i class="bi bi-chevron-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Blog Grid</a></li>
+            <li><a class="dropdown-item" href="#">Blog List</a></li>
+            <li><a class="dropdown-item" href="#">Single Post</a></li>
+            <li><a class="dropdown-item" href="#">Author Page</a></li>
+          </ul>
+        </li>
+
+        <!-- ✅ PAGE: 1 Column, 6 Items -->
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle no-caret"
+            href="#"
+            data-bs-toggle="dropdown"
+          >
+            Page <i class="bi bi-chevron-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">About Us</a></li>
+            <li><a class="dropdown-item" href="#">FAQ</a></li>
+            <li><a class="dropdown-item" href="#">404 Page</a></li>
+            <li><a class="dropdown-item" href="#">Terms & Conditions</a></li>
+            <li><a class="dropdown-item" href="#">Privacy Policy</a></li>
+            <li><a class="dropdown-item" href="#">Coming Soon</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="/drile_clone/pages/contact.html">Contact</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Start: Navbar Icon Group -->
+    <div class="d-flex align-items-center gap-4">
+      <!-- 🔍 Search (Only on lg and up) -->
+      <div id="search-wrapper" class="d-none d-lg-flex align-items-center">
+        <!-- Search Icon -->
+        <a
+          href="#"
+          id="search-toggle"
+          class="text-dark d-flex align-items-center"
+        >
+          <i class="bi bi-search fs-5"></i>
+        </a>
+
+        <!-- Search Bar (Hidden Initially) -->
+        <div id="search-bar" class="d-none ms-2">
+          <div class="input-group input-group-sm">
+            <span class="input-group-text bg-white border-end-0">
+              <i class="bi bi-search text-muted"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control border-start-0 border-end-0"
+              placeholder="Search..."
+              style="width: 580px"
+            />
+            <button
+              id="search-close"
+              class="btn btn-outline-secondary border-start-0"
+              type="button"
+            >
+              <i class="bi bi-x-lg"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 👤 Person -->
+      <div class="position-relative" id="account-wrapper">
+        <!-- Account Icon -->
+        <a
+          href="/drile_clone/pages/myaccount.html"
+          class="text-dark"
+          id="account-link"
+        >
+          <i class="bi bi-person fs-5" id="account-icon"></i>
+        </a>
+
+        <!-- Tooltip (hidden initially) -->
+        <div class="signin-tooltip" id="signin-tooltip">Sign In</div>
+
+        <!-- Hover Login Form -->
+        <div class="account-hover-form shadow" id="account-hover-form">
+          <form>
+            <div class="mb-3">
+              <label class="form-label">Username or Email Address</label>
+              <input type="text" class="form-control" id="hoverEmail" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control" id="hoverPassword" />
+            </div>
+            <div class="form-check mb-3 d-flex align-items-center gap-1">
+              <input
+                type="checkbox"
+                class="form-check-input tiny-checkbox"
+                id="rememberMe"
+              />
+              <label
+                class="form-check-label"
+                for="rememberMe"
+                style="font-size: 0.9rem"
+                >Remember Me</label
+              >
+            </div>
+            <button type="submit" class="btn btn-dark w-100 fw-bold">
+              LOG IN
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- 🛒 Cart -->
+      <div class="position-relative" id="cart-wrapper">
+        <!-- Cart Icon -->
+        <a
+          href="/drile_clone/pages/shopping_cart.html"
+          class="text-dark"
+          id="cart-link"
+        >
+          <i class="bi bi-cart fs-5" id="cart-icon"></i>
+
+          <!-- Black badge with count -->
+          <span class="cart-badge" id="cart-count-badge">0</span>
+        </a>
+
+        <!-- Tooltip (hover) -->
+        <div class="cart-tooltip" id="cart-tooltip">View Cart</div>
+
+        <!-- Cart Hover Preview -->
+        <div class="cart-hover-preview shadow" id="cart-hover-preview">
+          <div class="text-center p-4">
+            <i class="bi bi-cart" style="font-size: 48px; color: #e0e0e0"></i>
+            <p class="mt-3 mb-0 fw-medium">Your cart is currently empty</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ☰ Contact/Menu Toggle -->
+      <button id="toggle-contact" class="btn contact-toggle-btn">
+        <i id="contact-toggle-icon" class="bi bi-list fs-3"></i>
+      </button>
+    </div>
+    <!-- End: Navbar Icon Group -->
+  </div>
+</header>
+
+<!-- //off canvas -->
+
+<!--hamburger button overlapping -->
+<div
+  class="offcanvas offcanvas-start w-100"
+  tabindex="-1"
+  id="mobileMenu"
+  aria-labelledby="mobileMenuLabel"
+>
+  <div class="offcanvas-header">
+    <h5 class="fw-bold">drile</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+    ></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column gap-3">
+    <!-- Search Input (Only visible on large screens and up) -->
+    <div class="input-group">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search for products"
+      />
+      <button class="btn btn-outline-secondary">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+
+    <!-- Navigation Dropdowns -->
+    <ul class="list-unstyled">
+      <li class="dropdown">
+        <a
+          class="d-flex justify-content-between align-items-center text-dark py-2 fw-medium dropdown-toggle no-caret text-decoration-none"
+          data-bs-toggle="dropdown"
+          href="#"
+          >Home <i class="bi bi-chevron-down ms-auto"></i
+        ></a>
+        <ul class="dropdown-menu w-100">
+          <li>
+            <a class="dropdown-item" href="/drile_clone/index.html">HOME 1</a>
+          </li>
+          <li><a class="dropdown-item" href="#">Alternate Home</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a
+          class="d-flex justify-content-between align-items-center text-dark py-2 fw-medium dropdown-toggle no-caret text-decoration-none"
+          data-bs-toggle="dropdown"
+          href="#"
+          >Shop <i class="bi bi-chevron-down ms-auto"></i
+        ></a>
+        <ul class="dropdown-menu w-100">
+          <li><a class="dropdown-item" href="#">All Products</a></li>
+          <li><a class="dropdown-item" href="#">On Sale</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a
+          class="d-flex justify-content-between align-items-center text-dark py-2 fw-medium dropdown-toggle no-caret text-decoration-none"
+          data-bs-toggle="dropdown"
+          href="#"
+          >Product <i class="bi bi-chevron-down ms-auto"></i
+        ></a>
+        <ul class="dropdown-menu w-100">
+          <li><a class="dropdown-item" href="#">Product Style 1</a></li>
+          <li><a class="dropdown-item" href="#">Product Style 2</a></li>
+          <li><a class="dropdown-item" href="#">Product Style 3</a></li>
+          <li><a class="dropdown-item" href="#">Product Style 4</a></li>
+          <li><a class="dropdown-item" href="#">Product Style 5</a></li>
+          <li><a class="dropdown-item" href="#">Product Style 6</a></li>
+          <li><a class="dropdown-item" href="#">Product Style 7</a></li>
+          <li><a class="dropdown-item" href="#">Product Style 8</a></li>
+          <li><a class="dropdown-item" href="#">Compare Products</a></li>
+          <li><a class="dropdown-item" href="#">Product Reviews</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a
+          class="d-flex justify-content-between align-items-center text-dark py-2 fw-medium dropdown-toggle no-caret text-decoration-none"
+          data-bs-toggle="dropdown"
+          href="#"
+          >Blog <i class="bi bi-chevron-down ms-auto"></i
+        ></a>
+        <ul class="dropdown-menu w-100">
+          <li><a class="dropdown-item" href="#">Blog Grid</a></li>
+          <li><a class="dropdown-item" href="#">Blog List</a></li>
+          <li><a class="dropdown-item" href="#">Single Post</a></li>
+          <li><a class="dropdown-item" href="#">Author Page</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+        <a
+          class="d-flex justify-content-between align-items-center text-dark py-2 fw-medium dropdown-toggle no-caret text-decoration-none"
+          data-bs-toggle="dropdown"
+          href="#"
+          >Page <i class="bi bi-chevron-down ms-auto"></i
+        ></a>
+        <ul class="dropdown-menu w-100">
+          <li><a class="dropdown-item" href="#">About Us</a></li>
+          <li><a class="dropdown-item" href="#">FAQ</a></li>
+          <li><a class="dropdown-item" href="#">404 Page</a></li>
+          <li><a class="dropdown-item" href="#">Terms & Conditions</a></li>
+          <li><a class="dropdown-item" href="#">Privacy Policy</a></li>
+          <li><a class="dropdown-item" href="#">Coming Soon</a></li>
+        </ul>
+      </li>
+      <li>
+        <a
+          href="/drile_clone/pages/contact.html"
+          class="d-block text-dark py-2 fw-medium text-decoration-none"
+          >Contact</a
+        >
+      </li>
+
+      <!-- Currency Dropdown -->
+      <li class="dropdown mt-2">
+        <a
+          class="d-flex justify-content-between align-items-center text-dark py-2 fw-bold dropdown-toggle no-caret text-decoration-none"
+          data-bs-toggle="dropdown"
+          href="#"
+          >Currency <i class="bi bi-chevron-down ms-auto"></i
+        ></a>
+        <ul class="dropdown-menu w-100">
+          <li><a class="dropdown-item" href="#">INR ₹</a></li>
+          <li><a class="dropdown-item" href="#">USD $</a></li>
+          <li><a class="dropdown-item" href="#">EUR €</a></li>
+        </ul>
+      </li>
+
+      <!-- Language Dropdown -->
+      <li class="dropdown mt-2">
+        <a
+          class="d-flex justify-content-between align-items-center text-dark py-2 fw-bold dropdown-toggle no-caret text-decoration-none"
+          data-bs-toggle="dropdown"
+          href="#"
+          >Language <i class="bi bi-chevron-down ms-auto"></i
+        ></a>
+        <ul class="dropdown-menu w-100">
+          <li><a class="dropdown-item" href="#">English</a></li>
+          <li><a class="dropdown-item" href="#">हिंदी</a></li>
+          <li><a class="dropdown-item" href="#">Français</a></li>
+        </ul>
+      </li>
+    </ul>
+
+    <!-- Contact Info -->
+    <div class="mt-3">
+      <i class="bi bi-telephone-fill me-2"></i> (+91) 9876543210
+    </div>
+  </div>
+</div>

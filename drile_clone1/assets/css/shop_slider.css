@@ -1,0 +1,148 @@
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 0;
+}
+.gallery-container-wrapper {
+  width: 100%;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+}
+.gallery-inner-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.gallery-inner-scroll::-webkit-scrollbar {
+  display: none;
+}
+.gallery-item {
+  flex: 0 0 auto;
+  width: 100%;
+  padding: 1rem;
+  position: relative;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.gallery-item img {
+  width: 100%;
+  height: 18rem;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Smooth animation hover overlay styling */
+.card-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  cursor: pointer;
+}
+.card-overlay h2,
+.card-overlay p {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+.gallery-item:hover .card-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+.gallery-item:hover .card-overlay h2 {
+  font-size: 2rem;
+}
+.gallery-item:hover .card-overlay p {
+  font-size: 1rem;
+}
+.card-overlay h2 {
+  font-size: 6rem;
+  font-weight: 600;
+  margin: 0;
+  padding-bottom: 0.5rem;
+  transition: font-size 0.3s ease-in-out;
+}
+.card-overlay p {
+  font-size: 4rem;
+  font-weight: 400;
+  margin: 0;
+  transition: font-size 0.3s ease-in-out;
+}
+
+/* Ensure the main image doesn't get transformed on hover */
+.gallery-item:hover img {
+  transform: none;
+}
+
+/* Responsive widths for items on larger screens */
+@media (min-width: 768px) {
+  .gallery-inner-scroll {
+    padding-left: 12.5%;
+    padding-right: 12.5%;
+  }
+  .gallery-item {
+    flex: 0 0 33.333%;
+  }
+  .gallery-item img {
+    height: 500px;
+  }
+}
+
+/* Hide and animate the buttons */
+.carousel-control-prev,
+.carousel-control-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  color: #6b7280;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  border: none;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  z-index: 10;
+  opacity: 0; /* Hidden by default */
+  transition: all 0.3s ease-in-out;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Buttons fly in from the left and right */
+.carousel-control-prev {
+  left: 0.5rem;
+  transform: translateX(-100%) translateY(-50%);
+}
+.carousel-control-next {
+  right: 0.5rem;
+  transform: translateX(100%) translateY(-50%);
+}
+
+/* Show buttons on hover of the wrapper */
+.gallery-container-wrapper:hover .carousel-control-prev,
+.gallery-container-wrapper:hover .carousel-control-next {
+  opacity: 1;
+  transform: translateX(0) translateY(-50%);
+}
